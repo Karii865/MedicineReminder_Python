@@ -1,4 +1,8 @@
 # MedicineReminder_Python
 Medicine Reminder For Elderly
-# Initial Base Code Uploaded
-Make changes ahead accordingly, save and commit.
+# Features and Functionalities
+1. ADD
+2. VIEW
+3. UPDATE
+4. DELETE
+   Log whether medicines taken or not and Auto miss also added.
