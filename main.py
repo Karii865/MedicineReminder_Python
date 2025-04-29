@@ -93,7 +93,7 @@ def show_reminder(medicine_name):
 
     # ------------------ Timeout Logic ------------------
     def auto_miss():
-        time.sleep(120)  # Wait 5 minutes
+        time.sleep(120)  # Wait 2 minutes
         if reminder_window.winfo_exists():
             speak(f"You missed your medicine: {medicine_name}. Please take it now.")
             time.sleep(60)  # Wait 1 more minute
