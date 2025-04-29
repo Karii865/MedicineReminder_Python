@@ -75,6 +75,25 @@ def show_reminder(medicine_name):
     btn_missed = tk.Button(reminder_window, text="Missed ❌", command=lambda: missed_action(medicine_name, reminder_window))
     btn_missed.pack(side="right", padx=20, pady=20)
 
+    # ------------------ Timeout Logic ------------------
+    def auto_miss():
+        time.sleep(300)  # Wait 5 minutes
+        if reminder_window.winfo_exists():
+            speak(f"You missed your medicine: {medicine_name}. Please take it now.")
+            time.sleep(60)  # Wait 1 more minute
+            if reminder_window.winfo_exists():
+                log_medicine(medicine_name, "Missed (Auto)")
+                if medicine_name in current_reminders:
+                    del current_reminders[medicine_name]
+                try:
+                    reminder_window.destroy()
+                except:
+                    pass
+
+    timeout_thread = threading.Thread(target=auto_miss)
+    timeout_thread.daemon = True
+    timeout_thread.start()
+
 def taken_action(medicine_name, window):
     log_medicine(medicine_name, "Taken")
     if medicine_name in current_reminders:
@@ -86,6 +105,9 @@ def missed_action(medicine_name, window):
     if medicine_name in current_reminders:
         del current_reminders[medicine_name]
     window.destroy()
+
+def reset_reminders():
+    current_reminders.clear()
 
 # --------------------- Background Scheduler ---------------------
 def run_schedule():
@@ -116,6 +138,8 @@ add_button.pack(pady=10)
 
 note = tk.Label(root, text="(Keep the app running for reminders!)", font=("Arial", 10), fg="red")
 note.pack(pady=10)
+
+schedule.every().day.at("00:00").do(reset_reminders)
 
 # Schedule medicine check every 1 minute
 schedule.every(1).minutes.do(check_medicines)
