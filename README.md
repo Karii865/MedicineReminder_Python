@@ -5,4 +5,4 @@ Medicine Reminder For Elderly
 2. VIEW
 3. UPDATE
 4. DELETE
-   Log whether medicines taken or not and Auto miss also added.
+Log whether medicines taken or not and Auto miss also added.
